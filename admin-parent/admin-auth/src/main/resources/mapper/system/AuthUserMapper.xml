@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mxjlife.admin.auth.mapper.system.SysUserMapper">
+
+    <resultMap id="BaseResultMap" type="com.mxjlife.admin.auth.pojo.auth.SysUserInfo">
+        <id column="id" property="id" />
+        <result column="username" property="username" jdbcType="varchar" />
+        <result column="name" property="name" jdbcType="varchar" />
+        <result column="head" property="head" jdbcType="varchar" />
+        <result column="password" property="password" jdbcType="varchar" />
+        <result column="email" property="email" jdbcType="varchar" />
+        <result column="phone" property="phone" jdbcType="varchar" />
+        <result column="sex" property="sex" jdbcType="int" />
+        <result column="department" property="department" jdbcType="int" />
+        <result column="status" property="status" jdbcType="int" />
+        <result column="remark" property="remark" jdbcType="varchar" />
+        <result column="create_user" property="createUser" jdbcType="varchar" />
+        <result column="update_user" property="updateUser" jdbcType="varchar" />
+        <result column="update_time" property="updateTime" jdbcType="datetime" />
+        <result column="create_time" property="createTime" jdbcType="timestamp" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `id`, `username`, `name`, `head`, `password`, `email`, `phone`, `sex`, `department`, `status`, `remark`, `create_user`, `update_user`, `update_time`, `create_time`
+    </sql>
+
+    <!-- 添加数据  -->
+    <insert id="insert" parameterType="com.mxjlife.admin.auth.pojo.auth.SysUserInfo">
+        INSERT INTO
+        `manager`.`auth_user`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != '' "> `username`, </if>
+            <if test="name != null and name != '' "> `name`, </if>
+            <if test="head != null and head != '' "> `head`, </if>
+            <if test="password != null and password != '' "> `password`, </if>
+            <if test="email != null and email != '' "> `email`, </if>
+            <if test="phone != null and phone != '' "> `phone`, </if>
+            <if test="sex != null "> `sex`, </if>
+            <if test="department != null "> `department`, </if>
+            <if test="status != null "> `status`, </if>
+            <if test="remark != null and remark != '' "> `remark`, </if>
+            <if test="createUser != null and createUser != '' "> `create_user`, </if>
+            <if test="updateUser != null and updateUser != '' "> `update_user`, </if>
+            <if test="updateTime != null "> `update_time`, </if>
+            <if test="createTime != null "> `create_time`, </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != '' "> #{username}, </if>
+            <if test="name != null and name != '' "> #{name}, </if>
+            <if test="head != null and head != '' "> #{head}, </if>
+            <if test="password != null and password != '' "> #{password}, </if>
+            <if test="email != null and email != '' "> #{email}, </if>
+            <if test="phone != null and phone != '' "> #{phone}, </if>
+            <if test="sex != null ">  #{sex}, </if>
+            <if test="department != null ">  #{department}, </if>
+            <if test="status != null ">  #{status}, </if>
+            <if test="remark != null and remark != '' "> #{remark}, </if>
+            <if test="createUser != null and createUser != '' "> #{createUser}, </if>
+            <if test="updateUser != null and updateUser != '' "> #{updateUser}, </if>
+            <if test="updateTime != null ">  #{updateTime}, </if>
+            <if test="createTime != null ">  #{createTime}, </if>
+        </trim>
+    </insert>
+
+    <!-- 使用主键 id 更新  -->
+    <update id="updateById" parameterType="com.mxjlife.admin.auth.pojo.auth.SysUserInfo">
+        UPDATE
+        `manager`.`auth_user`
+        <set>
+            <if test="username != null "> `username` = #{username}, </if>
+            <if test="name != null "> `name` = #{name}, </if>
+            <if test="head != null "> `head` = #{head}, </if>
+            <if test="password != null "> `password` = #{password}, </if>
+            <if test="email != null "> `email` = #{email}, </if>
+            <if test="phone != null "> `phone` = #{phone}, </if>
+            <if test="sex != null "> `sex` = #{sex}, </if>
+            <if test="department != null "> `department` = #{department}, </if>
+            <if test="status != null "> `status` = #{status}, </if>
+            <if test="remark != null "> `remark` = #{remark}, </if>
+            <if test="createUser != null "> `create_user` = #{createUser}, </if>
+            <if test="updateUser != null "> `update_user` = #{updateUser}, </if>
+            <if test="updateTime != null "> `update_time` = #{updateTime}, </if>
+            <if test="createTime != null "> `create_time` = #{createTime}, </if>
+        </set>
+        WHERE
+            `id` = #{id}
+    </update>
+
+    <!-- 使用主键 id 查询  -->
+    <select id="selectById" parameterType="Long" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        `manager`.`auth_user`
+        WHERE
+        `id` = #{id}
+    </select>
+
+    <!-- 查询总条数  -->
+    <select id="getTotalCount"  resultType="long" >
+        SELECT
+        count(*)
+        FROM
+        `manager`.`auth_user`
+    </select>
+
+    <!-- 分页按条件查询信息  -->
+    <select id="selectPageByParams"  parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        `manager`.`auth_user`
+        <where>
+            <if test="params.id != null "> AND `id` = #{params.id} </if>
+            <if test="params.username != null "> AND `username` = #{params.username} </if>
+            <if test="params.name != null "> AND `name` = #{params.name} </if>
+            <if test="params.head != null "> AND `head` = #{params.head} </if>
+            <if test="params.password != null "> AND `password` = #{params.password} </if>
+            <if test="params.email != null "> AND `email` = #{params.email} </if>
+            <if test="params.phone != null "> AND `phone` = #{params.phone} </if>
+            <if test="params.sex != null "> AND `sex` = #{params.sex} </if>
+            <if test="params.department != null "> AND `department` = #{params.department} </if>
+            <if test="params.status != null "> AND `status` = #{params.status} </if>
+            <if test="params.remark != null "> AND `remark` = #{params.remark} </if>
+            <if test="params.createUser != null "> AND `create_user` = #{params.createUser} </if>
+            <if test="params.updateUser != null "> AND `update_user` = #{params.updateUser} </if>
+            <if test="params.startTime!=null">AND `update_time` &gt;= #{params.updateTime} </if>
+            <if test="params.endTime!=null">AND `update_time` &lt; #{params.updateTime} </if>
+            <if test="params.updateTime != null "> AND `update_time` = #{params.updateTime} </if>
+        </where>
+        order by id DESC
+        LIMIT #{params.offset}, #{params.pageSize}
+    </select>
+
+    <!-- 按条件查询信息条数  -->
+    <select id="selectCountByParams"  parameterType="java.util.Map" resultType="long">
+        SELECT
+        count(*)
+        FROM
+        `manager`.`auth_user`
+        <where>
+            <if test="params.id != null "> AND `id` = #{params.id} </if>
+            <if test="params.username != null "> AND `username` = #{params.username} </if>
+            <if test="params.name != null "> AND `name` = #{params.name} </if>
+            <if test="params.head != null "> AND `head` = #{params.head} </if>
+            <if test="params.password != null "> AND `password` = #{params.password} </if>
+            <if test="params.email != null "> AND `email` = #{params.email} </if>
+            <if test="params.phone != null "> AND `phone` = #{params.phone} </if>
+            <if test="params.sex != null "> AND `sex` = #{params.sex} </if>
+            <if test="params.department != null "> AND `department` = #{params.department} </if>
+            <if test="params.status != null "> AND `status` = #{params.status} </if>
+            <if test="params.remark != null "> AND `remark` = #{params.remark} </if>
+            <if test="params.createUser != null "> AND `create_user` = #{params.createUser} </if>
+            <if test="params.updateUser != null "> AND `update_user` = #{params.updateUser} </if>
+            <if test="params.startTime!=null">AND `update_time` &gt;= #{params.updateTime} </if>
+            <if test="params.endTime!=null">AND `update_time` &lt; #{params.updateTime} </if>
+        </where>
+    </select>
+
+    <!-- 使用索引 uniq_username 查询数据  -->
+    <select id="selectByUsername" parameterType="String" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        `manager`.`auth_user`
+        WHERE
+            `username` = #{username}
+    </select>
+
+
+</mapper>

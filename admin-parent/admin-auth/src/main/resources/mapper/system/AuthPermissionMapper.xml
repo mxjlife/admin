@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mxjlife.admin.auth.mapper.system.SysPermissionMapper">
+
+    <resultMap id="BaseResultMap" type="com.mxjlife.admin.auth.pojo.auth.SysPermission">
+        <id column="id" property="id" />
+        <result column="title" property="title" jdbcType="varchar" />
+        <result column="name" property="name" jdbcType="varchar" />
+        <result column="type" property="type" jdbcType="varchar" />
+        <result column="url" property="url" jdbcType="varchar" />
+        <result column="parent_id" property="parentId" jdbcType="bigint" />
+        <result column="method" property="method" jdbcType="varchar" />
+        <result column="sort" property="sort" jdbcType="int" />
+        <result column="icon" property="icon" jdbcType="varchar" />
+        <result column="status" property="status" jdbcType="int" />
+        <result column="remark" property="remark" jdbcType="varchar" />
+        <result column="create_user" property="createUser" jdbcType="varchar" />
+        <result column="update_user" property="updateUser" jdbcType="varchar" />
+        <result column="update_time" property="updateTime" jdbcType="datetime" />
+        <result column="create_time" property="createTime" jdbcType="timestamp" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `id`, `title`, `name`, `type`, `url`, `parent_id`, `method`, `sort`, `icon`, `status`, `remark`, `create_user`, `update_user`, `update_time`, `create_time`
+    </sql>
+
+    <!-- 添加数据  -->
+    <insert id="insert" parameterType="com.mxjlife.admin.auth.pojo.auth.SysPermission">
+        INSERT INTO
+        `manager`.`auth_permission`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null and title != '' "> `title`, </if>
+            <if test="name != null and name != '' "> `name`, </if>
+            <if test="type != null and type != '' "> `type`, </if>
+            <if test="url != null and url != '' "> `url`, </if>
+            <if test="parentId != null "> `parent_id`, </if>
+            <if test="method != null and method != '' "> `method`, </if>
+            <if test="sort != null "> `sort`, </if>
+            <if test="icon != null and icon != '' "> `icon`, </if>
+            <if test="status != null "> `status`, </if>
+            <if test="remark != null and remark != '' "> `remark`, </if>
+            <if test="createUser != null and createUser != '' "> `create_user`, </if>
+            <if test="updateUser != null and updateUser != '' "> `update_user`, </if>
+            <if test="updateTime != null "> `update_time`, </if>
+            <if test="createTime != null "> `create_time`, </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null and title != '' "> #{title}, </if>
+            <if test="name != null and name != '' "> #{name}, </if>
+            <if test="type != null and type != '' "> #{type}, </if>
+            <if test="url != null and url != '' "> #{url}, </if>
+            <if test="parentId != null ">  #{parentId}, </if>
+            <if test="method != null and method != '' "> #{method}, </if>
+            <if test="sort != null ">  #{sort}, </if>
+            <if test="icon != null and icon != '' "> #{icon}, </if>
+            <if test="status != null ">  #{status}, </if>
+            <if test="remark != null and remark != '' "> #{remark}, </if>
+            <if test="createUser != null and createUser != '' "> #{createUser}, </if>
+            <if test="updateUser != null and updateUser != '' "> #{updateUser}, </if>
+            <if test="updateTime != null ">  #{updateTime}, </if>
+            <if test="createTime != null ">  #{createTime}, </if>
+        </trim>
+    </insert>
+
+    <!-- 使用主键 id 更新  -->
+    <update id="updateById" parameterType="com.mxjlife.admin.auth.pojo.auth.SysPermission">
+        UPDATE
+        `manager`.`auth_permission`
+        <set>
+            <if test="title != null "> `title` = #{title}, </if>
+            <if test="name != null "> `name` = #{name}, </if>
+            <if test="type != null "> `type` = #{type}, </if>
+            <if test="url != null "> `url` = #{url}, </if>
+            <if test="parentId != null "> `parent_id` = #{parentId}, </if>
+            <if test="method != null "> `method` = #{method}, </if>
+            <if test="sort != null "> `sort` = #{sort}, </if>
+            <if test="icon != null "> `icon` = #{icon}, </if>
+            <if test="status != null "> `status` = #{status}, </if>
+            <if test="remark != null "> `remark` = #{remark}, </if>
+            <if test="createUser != null "> `create_user` = #{createUser}, </if>
+            <if test="updateUser != null "> `update_user` = #{updateUser}, </if>
+            <if test="updateTime != null "> `update_time` = #{updateTime}, </if>
+            <if test="createTime != null "> `create_time` = #{createTime}, </if>
+        </set>
+        WHERE
+            `id` = #{id}
+    </update>
+
+    <!-- 使用主键 id 查询  -->
+    <select id="selectById" parameterType="Long" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        `manager`.`auth_permission`
+        WHERE
+        `id` = #{id}
+    </select>
+
+    <!-- 查询总条数  -->
+    <select id="getTotalCount"  resultType="long" >
+        SELECT
+        count(*)
+        FROM
+        `manager`.`auth_permission`
+    </select>
+
+    <!-- 分页按条件查询信息  -->
+    <select id="selectPageByParams"  parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        `manager`.`auth_permission`
+        <where>
+            <if test="params.id != null "> AND `id` = #{params.id} </if>
+            <if test="params.title != null "> AND `title` = #{params.title} </if>
+            <if test="params.name != null "> AND `name` = #{params.name} </if>
+            <if test="params.type != null "> AND `type` = #{params.type} </if>
+            <if test="params.url != null "> AND `url` = #{params.url} </if>
+            <if test="params.parentId != null "> AND `parent_id` = #{params.parentId} </if>
+            <if test="params.method != null "> AND `method` = #{params.method} </if>
+            <if test="params.sort != null "> AND `sort` = #{params.sort} </if>
+            <if test="params.icon != null "> AND `icon` = #{params.icon} </if>
+            <if test="params.status != null "> AND `status` = #{params.status} </if>
+            <if test="params.remark != null "> AND `remark` = #{params.remark} </if>
+            <if test="params.createUser != null "> AND `create_user` = #{params.createUser} </if>
+            <if test="params.updateUser != null "> AND `update_user` = #{params.updateUser} </if>
+            <if test="params.startTime!=null">AND `update_time` &gt;= #{params.updateTime} </if>
+            <if test="params.endTime!=null">AND `update_time` &lt; #{params.updateTime} </if>
+            <if test="params.updateTime != null "> AND `update_time` = #{params.updateTime} </if>
+        </where>
+        order by id DESC
+        LIMIT #{params.offset}, #{params.pageSize}
+    </select>
+
+    <!-- 按条件查询信息条数  -->
+    <select id="selectCountByParams"  parameterType="java.util.Map" resultType="long">
+        SELECT
+        count(*)
+        FROM
+        `manager`.`auth_permission`
+        <where>
+            <if test="params.id != null "> AND `id` = #{params.id} </if>
+            <if test="params.title != null "> AND `title` = #{params.title} </if>
+            <if test="params.name != null "> AND `name` = #{params.name} </if>
+            <if test="params.type != null "> AND `type` = #{params.type} </if>
+            <if test="params.url != null "> AND `url` = #{params.url} </if>
+            <if test="params.parentId != null "> AND `parent_id` = #{params.parentId} </if>
+            <if test="params.method != null "> AND `method` = #{params.method} </if>
+            <if test="params.sort != null "> AND `sort` = #{params.sort} </if>
+            <if test="params.icon != null "> AND `icon` = #{params.icon} </if>
+            <if test="params.status != null "> AND `status` = #{params.status} </if>
+            <if test="params.remark != null "> AND `remark` = #{params.remark} </if>
+            <if test="params.createUser != null "> AND `create_user` = #{params.createUser} </if>
+            <if test="params.updateUser != null "> AND `update_user` = #{params.updateUser} </if>
+            <if test="params.startTime!=null">AND `update_time` &gt;= #{params.updateTime} </if>
+            <if test="params.endTime!=null">AND `update_time` &lt; #{params.updateTime} </if>
+        </where>
+    </select>
+
+    <!-- 使用索引 idx_name 查询数据  -->
+    <select id="selectByName" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        `manager`.`auth_permission`
+        WHERE
+            `name` = #{name}
+            
+    </select>
+
+    <select id="selectByRoleIdList" parameterType="List" resultMap="BaseResultMap" >
+        SELECT
+        p.`id`, p.`title`, p.`name`, p.`type`, p.`url`, p.`parent_id`, p.`method`, p.`sort`, p.`icon`
+        FROM
+        `manager`.`auth_role_permission` rp
+        LEFT JOIN
+        `manager`.`auth_permission` p
+        ON
+        rp.permission_id = p.id
+        WHERE
+        rp.role_id in
+        <foreach collection="roleIds" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+
+</mapper>
